@@ -10,9 +10,8 @@ class Orbiter {
         this.spacingSize = 40;
         this.actualSpacingSize = 0;
 
-        this.spacing = this.num*this.actualSpacingSize + right.outerRadius;
+        this.spacing = (this.num-1)*this.spacingSize + right.outerRadius;
         if (this.num == 0) this.spacing = 0;
-        else this.spacing = (this.num-1*this.actualSpacingSize) + right.outerRadius + this.actualSpacingSize;
 
         this.degree = random(360);
         if (this.num%2 == 1) this.direction = 1;
