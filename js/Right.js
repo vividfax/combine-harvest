@@ -25,7 +25,6 @@ class Right {
 
             objectLayer.ellipse(this.x, this.y, orbiters[i].spacing);
         }
-
     }
 
     distance(x, y, d) {

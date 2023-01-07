@@ -14,8 +14,9 @@ class Enemy {
         this.y = y;
 
         this.radius = 20;
+        this.actualSize = 0;
 
-        this.maxVelocity = 3;
+        this.maxVelocity = 2.5;
 
         this.velocityX = random(-this.maxVelocity, this.maxVelocity);
         this.velocityY = random(-this.maxVelocity, this.maxVelocity);
@@ -24,6 +25,8 @@ class Enemy {
     }
 
     update() {
+
+        if (this.actualSize < this.radius) this.actualSize += 0.5;
 
         if (this.dead) return;
 
@@ -67,6 +70,6 @@ class Enemy {
 
         objectLayer.noStroke();
         objectLayer.fill(100, 0, 0);
-        objectLayer.ellipse(this.x, this.y, this.radius);
+        objectLayer.ellipse(this.x, this.y, this.actualSize);
     }
 }

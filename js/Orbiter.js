@@ -5,10 +5,16 @@ class Orbiter {
         this.num = num;
 
         this.radius = 15;
-        this.spacing = num*40 + right.outerRadius;
+        this.actualSize = 0;
+
+        this.spacingSize = 40;
+        this.actualSpacingSize = 0;
+
+        this.spacing = this.num*this.actualSpacingSize + right.outerRadius;
+        if (this.num == 0) this.spacing = 0;
 
         this.degree = random(360);
-        if (num%2 == 1) this.direction = 1;
+        if (this.num%2 == 1) this.direction = 1;
         else this.direction = -1;
 
         this.x = 0;
@@ -18,6 +24,15 @@ class Orbiter {
     }
 
     update() {
+
+        if (this.num == 0 && this.spacing < this.num*this.actualSpacingSize + right.outerRadius) {
+            this.spacing += 5;
+        } else if (this.actualSpacingSize < this.spacingSize) {
+            this.actualSpacingSize += 0.5;
+            this.spacing = this.num*this.actualSpacingSize + right.outerRadius;
+        }
+
+        if (this.actualSize < this.radius) this.actualSize += 0.5;
 
         this.degree += 4 * this.direction * 1/this.spacing;
 
@@ -33,6 +48,6 @@ class Orbiter {
     display() {
 
         objectLayer.fill(150);
-        objectLayer.ellipse(this.x, this.y, this.radius);
+        objectLayer.ellipse(this.x, this.y, this.actualSize);
     }
 }

@@ -41,11 +41,17 @@ function setup() {
     for (let i = 0; i < 1; i++) {
         orbiters.push(new Orbiter(i));
     }
+
+    let resetButton = createButton("Reset");
+    resetButton.position(10, 10);
+    resetButton.mousePressed(reset);
 }
 
 function draw() {
 
-    butttonsPressed();
+    let percentCollected = round(numberCollected/numberOfCollectables*100);
+
+    buttonsPressed();
     stickMoved();
 
     updatePixels();
@@ -56,12 +62,6 @@ function draw() {
         collectables[i].update();
         // collectables[i].display();
     }
-
-    let percentCollected = round(numberCollected/numberOfCollectables*100);
-    fill(0);
-    textSize(20);
-    textAlign(CENTER, CENTER);
-    text(percentCollected + "%", width/2, height/2);
 
     right.update();
     right.display();
@@ -86,7 +86,7 @@ function draw() {
     image(progressMetreLayer, 0, 0);
 }
 
-function butttonsPressed() {
+function buttonsPressed() {
 
     let strength = 0.27;
 
@@ -125,28 +125,29 @@ function butttonsPressed() {
 
 function setupBackground() {
 
-  let perlinScale = 0.008;
+    let perlinScale = 0.005;
+    noiseSeed(random(1000000));
 
-  for (let i = 0; i < width; i++) {
-    for (let j = 0; j < height; j++) {
+    for (let i = 0; i < width; i++) {
+        for (let j = 0; j < height; j++) {
 
-      let perlin = noise(i*perlinScale, j*perlinScale);
-      let col;
+            let perlin = noise(i*perlinScale, j*perlinScale);
+            let col;
 
-      if (perlin < 0.5) {
-        colourA = color(50);
-        colourB = color(0);
-      } else {
-        colourA = color(100);
-        colourB = color(50);
-      }
+            if (perlin < 0.5) {
+                colourA = color(50);
+                colourB = color(0);
+            } else {
+                colourA = color(100);
+                colourB = color(50);
+            }
 
-      col = lerpColor(colourA, colourB, noise(i*perlinScale, j*perlinScale));
-      set(i, j, color(col));
+            col = lerpColor(colourA, colourB, noise(i*perlinScale, j*perlinScale));
+            set(i, j, color(col));
+        }
     }
-  }
 
-  updatePixels();
+    updatePixels();
 }
 
 function updateProgressMetre() {
@@ -188,4 +189,36 @@ function updateProgressMetre() {
         padding,
         height-padding - h*(metre/25)
     );
+}
+
+function reset() {
+
+    numberCollected = 0;
+    numberUntilNextOrbiter = 0;
+    collectables = [];
+    enemies = [];
+    orbiters = [];
+
+    left.x = width/2;
+    left.y = height/2;
+    right.x = width/2;
+    right.y = height/2;
+
+    left.dead = false;
+
+    for (let i = 0; i < numberOfCollectables; i++) {
+        collectables.push(new Collectable(random(width), random(height)));
+    }
+
+    for (let i = 0; i < 7; i++) {
+        enemies.push(new Enemy());
+    }
+
+    for (let i = 0; i < 1; i++) {
+        orbiters.push(new Orbiter(i));
+    }
+
+    setupBackground();
+    starTrailLayer.clear();
+    progressMetreLayer.clear();
 }
