@@ -27,8 +27,17 @@ class Enemy {
             this.velocityY = random(-this.maxVelocity, this.maxVelocity);
         }
 
-        if (this.x > width || this.x < 0) this.velocityX *= -1;
-        if (this.y > height || this.y < 0) this.velocityY *= -1;
+        if (this.x > width - this.radius/2 && this.velocityX > 0) {
+            this.velocityX *= -1;
+        } else if (this.x < 0 + this.radius/2 && this.velocityX < 0) {
+            this.velocityX *= -1;
+        }
+
+        if (this.y > height - this.radius/2 && this.velocityY > 0) {
+            this.velocityY *= -1;
+        } else if (this.y < 0 + this.radius/2 && this.velocityY < 0) {
+            this.velocityY *= -1;
+        }
     }
 
     display() {

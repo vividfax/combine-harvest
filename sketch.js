@@ -29,6 +29,7 @@ function setup() {
 
 function draw() {
 
+    butttonsPressed();
     stickMoved();
 
     background(112);
@@ -52,5 +53,42 @@ function draw() {
     for (let i = 0; i < enemies.length; i++) {
         enemies[i].update();
         enemies[i].display();
+    }
+}
+
+function butttonsPressed() {
+
+    let strength = 0.27;
+
+    if (keyIsDown(LEFT_ARROW)) {
+        controllerRX = -strength;
+    } else if (keyIsDown(RIGHT_ARROW)) {
+        controllerRX = strength;
+    } else {
+        controllerRX = 0;
+    }
+
+    if (keyIsDown(UP_ARROW)) {
+        controllerRY = -strength;
+    } else if (keyIsDown(DOWN_ARROW)) {
+        controllerRY = strength;
+    } else {
+        controllerRY = 0;
+    }
+
+    if (keyIsDown(65)) {
+        controllerLX = -strength;
+    } else if (keyIsDown(68)) {
+        controllerLX = strength;
+    } else {
+        controllerLX = 0;
+    }
+
+    if (keyIsDown(87)) {
+        controllerLY = -strength;
+    } else if (keyIsDown(83)) {
+        controllerLY = strength;
+    } else {
+        controllerLY = 0;
     }
 }
