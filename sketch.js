@@ -199,13 +199,8 @@ function reset() {
     enemies = [];
     orbiters = [];
 
-    left.x = width/2;
-    left.y = height/2;
-    right.x = width/2;
-    right.y = height/2;
-
-    left.dead = false;
-    left.actualSize = 0;
+    left = new Left(width/2, height/2);
+    right = new Right(width/2, height/2);
 
     for (let i = 0; i < numberOfCollectables; i++) {
         collectables.push(new Collectable(random(width), random(height)));
