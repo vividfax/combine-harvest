@@ -18,10 +18,12 @@ class Left {
 
     update() {
 
-        this.accelerationLX += controllerLX;
-        this.accelerationLY += controllerLY;
-        this.accelerationRX += controllerRX;
-        this.accelerationRY += controllerRY;
+        if (!this.dead) {
+            this.accelerationLX += controllerLX;
+            this.accelerationLY += controllerLY;
+            this.accelerationRX += controllerRX;
+            this.accelerationRY += controllerRY;
+        }
 
         if (this.actualSize < this.radius) this.actualSize += 0.5;
 

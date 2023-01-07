@@ -27,6 +27,7 @@ class Collectable {
             if (numberUntilNextOrbiter >= numberOfCollectables/10) {
                 numberUntilNextOrbiter = 0;
                 orbiters.push(new Orbiter(orbiters.length));
+                enemies.push(new Enemy());
             }
         }
     }

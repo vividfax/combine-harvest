@@ -17,10 +17,12 @@ class Right {
 
     update() {
 
-        this.accelerationLX += controllerLX;
-        this.accelerationLY += controllerLY;
-        this.accelerationRX += controllerRX;
-        this.accelerationRY += controllerRY;
+        if (!left.dead) {
+            this.accelerationLX += controllerLX;
+            this.accelerationLY += controllerLY;
+            this.accelerationRX += controllerRX;
+            this.accelerationRY += controllerRY;
+        }
 
         // this.x += this.accelerationRX;
         // this.y += this.accelerationRY;
@@ -38,18 +40,35 @@ class Right {
         this.accelerationRX *= 0.95;
         this.accelerationRY *= 0.95;
 
-        if (this.x > width) this.x -= width;
-        if (this.x < 0) this.x += width;
-        if (this.y > height) this.y -= height;
-        if (this.y < 0) this.y += height;
+        let loop = false;
 
-        let leftV = createVector(left.x, left.y);
-        let rightV = createVector(this.x, this.y);
-        let thisV = p5.Vector.lerp(leftV, rightV, 0.95);
+        if (this.x > width) {
+            this.x -= width;
+            loop = true;
+        } else if (this.x < 0) {
+            this.x += width;
+            loop = true;
+        }
 
-        this.x = thisV.x;
-        this.y = thisV.y;
+        if (this.y > height) {
+            this.y -= height;
+            loop = true;
+        } else if (this.y < 0) {
+            this.y += height;
+            loop = true;
+        }
 
+        if (!loop) {
+
+            let leftV = createVector(left.x, left.y);
+            let rightV = createVector(this.x, this.y);
+            let thisV = p5.Vector.lerp(leftV, rightV, 0.95);
+
+            if (dist(this.x, this.y, left.x, left.y) < 300) {
+                this.x = thisV.x;
+                this.y = thisV.y;
+            }
+        }
     }
 
     display() {
