@@ -21,6 +21,9 @@ let vignette;
 let starImage;
 let cometImage;
 
+let regularFont;
+
+let currentPalette;
 let gradLocations = [
     0,
     0.3,
@@ -30,13 +33,14 @@ let gradLocations = [
     0.7,
     1.0
 ];
-let currentPalette;
 
 function preload() {
 
     vignette = loadImage("./images/vingette.png");
     starImage = loadImage("./images/star.png");
     cometImage = loadImage("./images/comet.png");
+
+    regularFont = loadFont("./fonts/AtkinsonHyperlegible-Regular.ttf");
 }
 
 function setup() {
