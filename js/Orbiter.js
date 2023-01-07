@@ -20,6 +20,8 @@ class Orbiter {
         this.x = 0;
         this.y = 0;
 
+        this.speed = 6;
+
         right.bounds += 40;
     }
 
@@ -34,7 +36,7 @@ class Orbiter {
 
         if (this.actualSize < this.radius) this.actualSize += 0.5;
 
-        this.degree += 4 * this.direction * 1/this.spacing;
+        this.degree += this.speed * this.direction * 1/this.spacing;
 
         let vec = createVector(right.x, right.y);
         vec.setHeading(this.degree);

@@ -26,17 +26,20 @@ class Left {
 
     display() {
 
+        let offsetX = random(-this.radius/100, this.radius/100);
+        let offsetY = random(-this.radius/100, this.radius/100);
+
         objectLayer.noStroke();
 
         if (this.dead) objectLayer.fill(0, 50);
         else objectLayer.fill(255, 100);
 
-        objectLayer.ellipse(this.x, this.y, this.actualSize);
+        objectLayer.ellipse(this.x + offsetX, this.y + offsetY, this.actualSize);
 
         if (this.dead) objectLayer.fill(0);
         else objectLayer.fill(255);
 
-        objectLayer.ellipse(this.x, this.y, this.actualSize-8);
+        objectLayer.ellipse(this.x + offsetX, this.y + offsetY, this.actualSize-8);
 
 
         if (!this.dead) {
