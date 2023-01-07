@@ -52,7 +52,15 @@ class Orbiter {
         objectLayer.drawingContext.setLineDash([13, 13]);
         objectLayer.fill(255);
         objectLayer.ellipse(this.x, this.y, this.actualSize);
+        objectLayer.ellipse(this.x-width, this.y, this.actualSize);
+        objectLayer.ellipse(this.x+width, this.y, this.actualSize);
+        objectLayer.ellipse(this.x, this.y-height, this.actualSize);
+        objectLayer.ellipse(this.x, this.y+height, this.actualSize);
         objectLayer.fill(50);
         objectLayer.ellipse(this.x, this.y, this.actualSize*.9);
+        objectLayer.ellipse(this.x-width, this.y, this.actualSize*.9);
+        objectLayer.ellipse(this.x+width, this.y, this.actualSize*.9);
+        objectLayer.ellipse(this.x, this.y-height, this.actualSize*.9);
+        objectLayer.ellipse(this.x, this.y+height, this.actualSize*.9);
     }
 }

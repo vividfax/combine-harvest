@@ -37,6 +37,11 @@ class Left {
         this.accelerationLY *= 0.95;
         this.accelerationRX *= 0.95;
         this.accelerationRY *= 0.95;
+
+        if (this.x > width) this.x -= width;
+        if (this.x < 0) this.x += width;
+        if (this.y > height) this.y -= height;
+        if (this.y < 0) this.y += height;
     }
 
     display() {
