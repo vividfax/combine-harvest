@@ -17,6 +17,7 @@ let progressMetreLayer;
 
 let vignette;
 let starImage;
+let cometImage;
 
 let gradLocations = [
     0,
@@ -33,6 +34,7 @@ function preload() {
 
     vignette = loadImage("./images/vingette.png");
     starImage = loadImage("./images/star.png");
+    cometImage = loadImage("./images/comet.png");
 }
 
 function setup() {
@@ -52,6 +54,7 @@ function setup() {
 
     frameRate(50);
     backgroundStarLayer.imageMode(CENTER);
+    objectLayer.angleMode(DEGREES);
 
     setupController();
     currentPalette = palette0;
@@ -72,11 +75,11 @@ function setup() {
         orbiters.push(new Orbiter(i));
     }
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 12; i++) {
         backgroundStars.push(new BackgroundStar());
     }
 
-    for (let i = 0; i < 150; i++) {
+    for (let i = 0; i < 750; i++) {
         smallBackgroundStars.push(new SmallBackgroundStar());
     }
 
@@ -277,6 +280,8 @@ function reset() {
     collectables = [];
     enemies = [];
     orbiters = [];
+    backgroundStars = [];
+    smallBackgroundStars = [];
 
     left = new Left(width/2, height/2);
     right = new Right(width/2, height/2);
@@ -291,6 +296,14 @@ function reset() {
 
     for (let i = 0; i < 1; i++) {
         orbiters.push(new Orbiter(i));
+    }
+
+    for (let i = 0; i < 12; i++) {
+        backgroundStars.push(new BackgroundStar());
+    }
+
+    for (let i = 0; i < 750; i++) {
+        smallBackgroundStars.push(new SmallBackgroundStar());
     }
 
     setupBackground();

@@ -68,8 +68,17 @@ class Enemy {
 
         if (this.dead) return;
 
-        objectLayer.noStroke();
-        objectLayer.fill(100, 0, 0);
-        objectLayer.ellipse(this.x, this.y, this.actualSize);
+        let vec = createVector(this.x - left.x, this.y - left.y);
+        let heading = degrees(vec.heading())+90;
+
+        objectLayer.push();
+        objectLayer.translate(this.x, this.y);
+        objectLayer.rotate(heading);
+        objectLayer.imageMode(CENTER);
+        // objectLayer.noStroke();
+        // objectLayer.fill(100, 0, 0);
+        // objectLayer.ellipse(this.x, this.y, this.actualSize);
+        objectLayer.image(cometImage, 0, 0, 60, 60);
+        objectLayer.pop();
     }
 }
