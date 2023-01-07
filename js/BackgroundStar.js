@@ -6,28 +6,27 @@ class BackgroundStar {
         this.y = int(random(height));
 
         this.displayed = false;
-        this.doneDisplaying = false;
+
+        this.offset = random(100);
+        this.speed = random(0.5, 1);
     }
 
     update() {
 
         if (this.displayed) return;
 
-        let d = pixelDensity();
-
-        let pixel = starTrailLayer.pixels[((this.y*width*d)+this.x)*8];
-
-        if (pixel == 1) {
-            this.displayed = true;
-        }
+        if (dist(left.x, left.y, this.x, this.y) < 30) this.displayed = true;
     }
 
     display() {
 
-        if (!this.doneDisplaying && this.displayed) {
-            this.doneDisplaying = true;
+        let starScale = cos((frameCount+this.offset) / 10*this.speed);
 
-            backgroundStarLayer.image(starImage, this.x, this.y, 15, 15);
+        if (this.displayed) {
+            backgroundStarLayer.tint(255, 255);
+        } else {
+            backgroundStarLayer.tint(255, 100);
         }
+        backgroundStarLayer.image(starImage, this.x, this.y, 30*starScale, 30*starScale);
     }
 }

@@ -3,6 +3,7 @@ let collectables = [];
 let enemies = [];
 let orbiters = [];
 let backgroundStars = [];
+let smallBackgroundStars = [];
 
 let numberCollected = 0;
 let numberOfCollectables = 10000;
@@ -11,6 +12,7 @@ let numberUntilNextOrbiter = 0;
 let objectLayer;
 let starTrailLayer;
 let backgroundStarLayer;
+let smallBackgroundStarLayer;
 let progressMetreLayer;
 
 let vignette;
@@ -29,8 +31,8 @@ let currentPalette;
 
 function preload() {
 
-    // vignette = loadImage("/images/vingette.png");
-    starImage = loadImage("/images/star.png");
+    vignette = loadImage("./images/vingette.png");
+    starImage = loadImage("./images/star.png");
 }
 
 function setup() {
@@ -45,9 +47,11 @@ function setup() {
     objectLayer = createGraphics(w, h);
     starTrailLayer = createGraphics(w, h);
     backgroundStarLayer = createGraphics(w, h);
+    smallBackgroundStarLayer = createGraphics(w, h);
     progressMetreLayer = createGraphics(w, h);
 
     frameRate(50);
+    backgroundStarLayer.imageMode(CENTER);
 
     setupController();
     currentPalette = palette0;
@@ -68,8 +72,12 @@ function setup() {
         orbiters.push(new Orbiter(i));
     }
 
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 10; i++) {
         backgroundStars.push(new BackgroundStar());
+    }
+
+    for (let i = 0; i < 150; i++) {
+        smallBackgroundStars.push(new SmallBackgroundStar());
     }
 
     let resetButton = createButton("Reset");
@@ -85,6 +93,8 @@ function draw() {
     updatePixels();
 
     objectLayer.clear();
+    smallBackgroundStarLayer.clear();
+    backgroundStarLayer.clear();
 
     for (let i = 0; i < collectables.length; i++) {
         collectables[i].update();
@@ -104,17 +114,22 @@ function draw() {
         orbiters[i].display();
     }
 
+    for (let i = 0; i < smallBackgroundStars.length; i++) {
+        smallBackgroundStars[i].display();
+    }
+
+    drawStars();
+
     left.update();
     left.display();
 
     updateProgressMetre();
 
-    drawStars();
-
     image(starTrailLayer, 0, 0);
+    image(smallBackgroundStarLayer, 0, 0);
     image(backgroundStarLayer, 0, 0);
     image(objectLayer, 0, 0);
-    // image(vignette, 0, 0, width, height);
+    image(vignette, 0, 0, width, height);
     image(progressMetreLayer, 0, 0);
 }
 
