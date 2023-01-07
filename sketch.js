@@ -2,6 +2,7 @@ let left, right;
 let collectables = [];
 let enemies = [];
 let orbiters = [];
+let backgroundStars = [];
 
 let numberCollected = 0;
 let numberOfCollectables = 10000;
@@ -9,7 +10,26 @@ let numberUntilNextOrbiter = 0;
 
 let objectLayer;
 let starTrailLayer;
+let backgroundStarLayer;
 let progressMetreLayer;
+
+let vignette;
+
+let gradLocations = [
+    0,
+    0.3,
+    0.45,
+    0.5,
+    0.6,
+    0.7,
+    1.0
+];
+let currentPalette;
+
+function preload() {
+
+    vignette = loadImage("/images/vingette.png");
+}
 
 function setup() {
 
@@ -22,9 +42,11 @@ function setup() {
     createCanvas(w, h);
     objectLayer = createGraphics(w, h);
     starTrailLayer = createGraphics(w, h);
+    backgroundStarLayer = createGraphics(w, h);
     progressMetreLayer = createGraphics(w, h);
 
     setupController();
+    currentPalette = palette0;
     setupBackground();
 
     right = new Right(width/2, height/2);
@@ -42,14 +64,16 @@ function setup() {
         orbiters.push(new Orbiter(i));
     }
 
+    for (let i = 0; i < 50; i++) {
+        backgroundStars.push(new BackgroundStar());
+    }
+
     let resetButton = createButton("Reset");
     resetButton.position(10, 10);
     resetButton.mousePressed(reset);
 }
 
 function draw() {
-
-    let percentCollected = round(numberCollected/numberOfCollectables*100);
 
     buttonsPressed();
     stickMoved();
@@ -81,8 +105,12 @@ function draw() {
 
     updateProgressMetre();
 
+    drawStars();
+
     image(starTrailLayer, 0, 0);
+    image(backgroundStarLayer, 0, 0);
     image(objectLayer, 0, 0);
+    image(vignette, 0, 0, width, height);
     image(progressMetreLayer, 0, 0);
 }
 
@@ -125,27 +153,59 @@ function buttonsPressed() {
 
 function setupBackground() {
 
-    let perlinScale = 0.005;
+    let perlinScale = 0.01;
     noiseSeed(random(1000000));
 
     for (let i = 0; i < width; i++) {
         for (let j = 0; j < height; j++) {
 
-            let perlin = noise(i*perlinScale, j*perlinScale);
-            let col;
+          let perlin = noise(i*perlinScale, j*perlinScale);
+          let col;
+          let colourA;
+          let colourB;
 
-            if (perlin < 0.5) {
-                colourA = color(50);
-                colourB = color(0);
-            } else {
-                colourA = color(100);
-                colourB = color(50);
-            }
+          //A - B
+          if (perlin < gradLocations[1]){
+            colourA = color(currentPalette.gradA);
+            colourB = color(currentPalette.gradB);
+            perlin = map(perlin, 0, gradLocations[1], 0, 1);
+          }
 
-            col = lerpColor(colourA, colourB, noise(i*perlinScale, j*perlinScale));
-            set(i, j, color(col));
+          //B - C
+          else if (perlin > gradLocations[1] && perlin < gradLocations[2]){
+            colourA = color(currentPalette.gradB);
+            colourB = color(currentPalette.gradC);
+            perlin = map(perlin, gradLocations[1], gradLocations[2], 0, 1);
+          }
+
+          //edge glow
+          else if (perlin > gradLocations[2] && perlin < gradLocations[3]){
+            colourA = color(currentPalette.colourEdge);
+            colourB = color(currentPalette.gradD);
+            perlin = map(perlin, gradLocations[2], gradLocations[3], 0, 1);
+          }
+
+          //D - E
+          else if (perlin > gradLocations[3] && perlin < gradLocations[4]){
+            colourA = color(currentPalette.gradD);
+            colourB = color(currentPalette.gradE);
+            perlin = map(perlin, gradLocations[3], gradLocations[4], 0, 1);
+          //E - F
+          }else if (perlin > gradLocations[4] && perlin < gradLocations[5]){
+            colourA = color(currentPalette.gradE);
+            colourB = color(currentPalette.gradF);
+            perlin = map(perlin, gradLocations[4], gradLocations[5], 0, 1);
+          //F
+          }else{
+            colourA = color(currentPalette.gradF);
+            colourB = color(currentPalette.gradF);
+            perlin = map(perlin, gradLocations[5], 1.0, 0, 1);
+          }
+
+          col = lerpColor(colourA, colourB, perlin);
+          set(i, j, color(col));
         }
-    }
+      }
 
     updatePixels();
 }
@@ -216,5 +276,17 @@ function reset() {
 
     setupBackground();
     starTrailLayer.clear();
+    backgroundStarLayer.clear();
     progressMetreLayer.clear();
+}
+
+function drawStars() {
+
+    starTrailLayer.loadPixels();
+
+    for (let i = 0; i < backgroundStars.length; i++) {
+
+        backgroundStars[i].update();
+        backgroundStars[i].display();
+    }
 }
