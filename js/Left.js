@@ -25,13 +25,13 @@ class Left {
 
         if (this.actualSize < this.radius) this.actualSize += 0.5;
 
-        if (right.distance(this.x, this.y, right.bounds)) {
-            this.x += this.accelerationRX;
-            this.y += this.accelerationRY;
-        } else if (!this.dead) {
-            this.x += this.accelerationLX *.5;
-            this.y += this.accelerationLY *.5;
-        }
+        // if (right.distance(this.x, this.y, right.bounds)) {
+            // this.x += this.accelerationRX;
+            // this.y += this.accelerationRY;
+        // } else if (!this.dead) {
+            this.x += this.accelerationLX;
+            this.y += this.accelerationLY;
+        // }
 
         this.accelerationLX *= 0.95;
         this.accelerationLY *= 0.95;

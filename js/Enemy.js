@@ -80,7 +80,7 @@ class Enemy {
         // objectLayer.noStroke();
         // objectLayer.fill(100, 0, 0);
         // objectLayer.ellipse(this.x, this.y, this.actualSize);
-        objectLayer.image(cometImage, 0, 0, 60, 60);
+        objectLayer.image(cometImage, 0, 0, this.actualSize*3, this.actualSize*3);
         objectLayer.pop();
     }
 }
