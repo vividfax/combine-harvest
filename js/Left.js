@@ -63,7 +63,7 @@ class Left {
 
         if (!this.dead) {
             starTrailLayer.fill(1);
-            starTrailLayer.ellipse(this.x, this.y, this.actualSize-2);
+            starTrailLayer.ellipse(this.x, this.y, this.actualSize-9);
         }
     }
 }

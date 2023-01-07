@@ -6,7 +6,7 @@ let backgroundStars = [];
 let smallBackgroundStars = [];
 
 let numberCollected = 0;
-let numberOfCollectables = 10000;
+let numberOfCollectables = 5000;
 let numberUntilNextOrbiter = 0;
 
 let objectLayer;
@@ -79,7 +79,7 @@ function setup() {
         backgroundStars.push(new BackgroundStar());
     }
 
-    for (let i = 0; i < 750; i++) {
+    for (let i = 0; i < 500; i++) {
         smallBackgroundStars.push(new SmallBackgroundStar());
     }
 
@@ -302,7 +302,7 @@ function reset() {
         backgroundStars.push(new BackgroundStar());
     }
 
-    for (let i = 0; i < 750; i++) {
+    for (let i = 0; i < 500; i++) {
         smallBackgroundStars.push(new SmallBackgroundStar());
     }
 
