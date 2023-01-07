@@ -6,22 +6,26 @@ class Right {
         this.y = y;
 
         this.radius = 20;
-        this.outerRadius = 200;
+        this.outerRadius = 150;
+        this.bounds = this.outerRadius-40;
     }
 
     update() {
 
-        this.x += controllerRX * 10;
-        this.y += controllerRY * 10;
+        this.x += controllerRX * 15;
+        this.y += controllerRY * 15;
     }
 
     display() {
 
-        stroke(0);
-        noFill();
-        ellipse(this.x, this.y, this.outerRadius);
-        // fill(255);
-        // ellipse(this.x, this.y, this.radius);
+        objectLayer.stroke(200);
+        objectLayer.noFill();
+
+        for (let i = 0; i < orbiters.length; i++) {
+
+            objectLayer.ellipse(this.x, this.y, orbiters[i].spacing);
+        }
+
     }
 
     distance(x, y, d) {

@@ -18,6 +18,16 @@ class Collectable {
         if (dist(left.x, left.y, this.x, this.y) < this.radius/2 + left.radius/2) {
             this.collected = true;
             numberCollected++;
+            numberUntilNextOrbiter++;
+
+            if (left.radius < 80) {
+                left.radius += 0.01;
+            }
+
+            if (numberUntilNextOrbiter >= numberOfCollectables/10) {
+                numberUntilNextOrbiter = 0;
+                orbiters.push(new Orbiter(orbiters.length));
+            }
         }
     }
 

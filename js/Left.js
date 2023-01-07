@@ -5,29 +5,34 @@ class Left {
         this.x = x;
         this.y = y;
 
-        this.radius = 50;
+        this.radius = 20;
 
         this.dead = false;
     }
 
     update() {
 
-        if (right.distance(this.x, this.y, right.outerRadius)) {
-            this.x += controllerRX * 10;
-            this.y += controllerRY * 10;
+        if (right.distance(this.x, this.y, right.bounds)) {
+            this.x += controllerRX * 15;
+            this.y += controllerRY * 15;
         } else if (!this.dead) {
-            this.x += controllerLX * 5;
-            this.y += controllerLY * 5;
+            this.x += controllerLX * 7.5;
+            this.y += controllerLY * 7.5;
         }
     }
 
     display() {
 
-        noStroke();
+        objectLayer.noStroke();
 
-        if (this.dead) fill(0);
-        else fill(200);
+        if (this.dead) objectLayer.fill(0);
+        else objectLayer.fill(255);
 
-        ellipse(this.x, this.y, this.radius);
+        objectLayer.ellipse(this.x, this.y, this.radius);
+
+        if (!this.dead) {
+            starTrailLayer.fill(0);
+            starTrailLayer.ellipse(this.x, this.y, this.radius-2);
+        }
     }
 }
