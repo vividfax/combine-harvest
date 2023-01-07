@@ -6,15 +6,16 @@ class BackgroundStar {
         this.y = int(random(height));
 
         this.displayed = false;
+        this.doneDisplaying = false;
     }
 
     update() {
 
-        return;
-
         if (this.displayed) return;
 
-        let pixel = starTrailLayer.pixels[((this.y*width)+this.x)*4];
+        let d = pixelDensity();
+
+        let pixel = starTrailLayer.pixels[((this.y*width*d)+this.x)*8];
 
         if (pixel == 1) {
             this.displayed = true;
@@ -23,8 +24,10 @@ class BackgroundStar {
 
     display() {
 
-        if (this.displayed) {
+        if (!this.doneDisplaying && this.displayed) {
+            this.doneDisplaying = true;
 
+            backgroundStarLayer.image(starImage, this.x, this.y, 15, 15);
         }
     }
 }

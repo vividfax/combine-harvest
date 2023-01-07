@@ -14,6 +14,7 @@ let backgroundStarLayer;
 let progressMetreLayer;
 
 let vignette;
+let starImage;
 
 let gradLocations = [
     0,
@@ -28,7 +29,8 @@ let currentPalette;
 
 function preload() {
 
-    vignette = loadImage("/images/vingette.png");
+    // vignette = loadImage("/images/vingette.png");
+    starImage = loadImage("/images/star.png");
 }
 
 function setup() {
@@ -44,6 +46,8 @@ function setup() {
     starTrailLayer = createGraphics(w, h);
     backgroundStarLayer = createGraphics(w, h);
     progressMetreLayer = createGraphics(w, h);
+
+    frameRate(50);
 
     setupController();
     currentPalette = palette0;
@@ -110,7 +114,7 @@ function draw() {
     image(starTrailLayer, 0, 0);
     image(backgroundStarLayer, 0, 0);
     image(objectLayer, 0, 0);
-    image(vignette, 0, 0, width, height);
+    // image(vignette, 0, 0, width, height);
     image(progressMetreLayer, 0, 0);
 }
 
