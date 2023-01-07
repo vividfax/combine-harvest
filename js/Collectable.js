@@ -17,10 +17,10 @@ class Collectable {
 
         this.checkDist(left.x, left.y, left.radius);
 
-        for (let i = 0; i < orbiters.length; i++) {
+        // for (let i = 0; i < orbiters.length; i++) {
 
-            this.checkDist(orbiters[i].x, orbiters[i].y, orbiters[i].radius);
-        }
+        //     this.checkDist(orbiters[i].x, orbiters[i].y, orbiters[i].radius);
+        // }
     }
 
     display() {

@@ -27,6 +27,10 @@ class Orbiter {
 
     update() {
 
+        // let acc = abs(left.accelerationLX) + abs(left.accelerationLY);
+        // acc = 10-acc;
+        // this.speed = 6 + acc;
+
         if (this.num == 0 && this.spacing < this.num*this.actualSpacingSize + right.outerRadius) {
             this.spacing += 5;
         } else if (this.actualSpacingSize < this.spacingSize) {
@@ -63,9 +67,9 @@ class Orbiter {
         objectLayer.ellipse(this.x, this.y-height, this.actualSize*.9);
         objectLayer.ellipse(this.x, this.y+height, this.actualSize*.9);
 
-        if (!left.dead) {
-            starTrailLayer.fill(1);
-            starTrailLayer.ellipse(this.x, this.y, this.actualSize-9);
-        }
+        // if (!left.dead) {
+        //     starTrailLayer.fill(1);
+        //     starTrailLayer.ellipse(this.x, this.y, this.actualSize-9);
+        // }
     }
 }
