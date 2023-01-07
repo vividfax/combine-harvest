@@ -15,7 +15,27 @@ class Collectable {
         if (this.collected) return;
         if (left.dead) return;
 
-        if (dist(left.x, left.y, this.x, this.y) < this.radius/2 + left.radius/2) {
+        this.checkDist(left.x, left.y, left.radius);
+
+        for (let i = 0; i < orbiters.length; i++) {
+
+            this.checkDist(orbiters[i].x, orbiters[i].y, orbiters[i].radius);
+        }
+    }
+
+    display() {
+
+        if (this.collected) return;
+
+        noFill();
+        noStroke();
+        fill(255, 255, 255, 10);
+        rect(this.x, this.y, this.radius);
+    }
+
+    checkDist(x, y, radius) {
+
+        if (dist(x, y, this.x, this.y) < this.radius/2 + radius/2) {
             this.collected = true;
             numberCollected++;
             numberUntilNextOrbiter++;
@@ -30,15 +50,6 @@ class Collectable {
                 enemies.push(new Enemy());
             }
         }
-    }
 
-    display() {
-
-        if (this.collected) return;
-
-        noFill();
-        noStroke();
-        fill(255, 255, 255, 10);
-        rect(this.x, this.y, this.radius);
     }
 }
