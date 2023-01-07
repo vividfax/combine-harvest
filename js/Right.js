@@ -8,12 +8,21 @@ class Right {
         this.radius = 20;
         this.outerRadius = 150;
         this.bounds = this.outerRadius-40;
+
+        this.accelerationRX = 0;
+        this.accelerationRY = 0;
     }
 
     update() {
 
-        this.x += controllerRX * 15;
-        this.y += controllerRY * 15;
+        this.accelerationRX += controllerRX;
+        this.accelerationRY += controllerRY;
+
+        this.x += this.accelerationRX;
+        this.y += this.accelerationRY;
+
+        this.accelerationRX *= 0.95;
+        this.accelerationRY *= 0.95;
     }
 
     display() {
