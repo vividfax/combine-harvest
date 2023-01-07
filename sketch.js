@@ -205,6 +205,7 @@ function reset() {
     right.y = height/2;
 
     left.dead = false;
+    left.actualSize = 0;
 
     for (let i = 0; i < numberOfCollectables; i++) {
         collectables.push(new Collectable(random(width), random(height)));

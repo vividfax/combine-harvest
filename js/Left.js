@@ -6,11 +6,14 @@ class Left {
         this.y = y;
 
         this.radius = 20;
+        this.actualSize = 0;
 
         this.dead = false;
     }
 
     update() {
+
+        if (this.actualSize < this.radius) this.actualSize += 0.5;
 
         if (right.distance(this.x, this.y, right.bounds)) {
             this.x += controllerRX * 15;
@@ -25,14 +28,20 @@ class Left {
 
         objectLayer.noStroke();
 
+        if (this.dead) objectLayer.fill(0, 50);
+        else objectLayer.fill(255, 100);
+
+        objectLayer.ellipse(this.x, this.y, this.actualSize);
+
         if (this.dead) objectLayer.fill(0);
         else objectLayer.fill(255);
 
-        objectLayer.ellipse(this.x, this.y, this.radius);
+        objectLayer.ellipse(this.x, this.y, this.actualSize-8);
+
 
         if (!this.dead) {
             starTrailLayer.fill(0);
-            starTrailLayer.ellipse(this.x, this.y, this.radius-2);
+            starTrailLayer.ellipse(this.x, this.y, this.actualSize-2);
         }
     }
 }

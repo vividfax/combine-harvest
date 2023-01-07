@@ -18,7 +18,8 @@ class Right {
 
     display() {
 
-        objectLayer.stroke(200);
+        objectLayer.stroke(200, 100);
+        objectLayer.strokeWeight(3);
         objectLayer.noFill();
 
         for (let i = 0; i < orbiters.length; i++) {

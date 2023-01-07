@@ -12,6 +12,7 @@ class Orbiter {
 
         this.spacing = this.num*this.actualSpacingSize + right.outerRadius;
         if (this.num == 0) this.spacing = 0;
+        else this.spacing = (this.num-1*this.actualSpacingSize) + right.outerRadius + this.actualSpacingSize;
 
         this.degree = random(360);
         if (this.num%2 == 1) this.direction = 1;
@@ -47,7 +48,10 @@ class Orbiter {
 
     display() {
 
-        objectLayer.fill(150);
+        objectLayer.drawingContext.setLineDash([13, 13]);
+        objectLayer.fill(255);
         objectLayer.ellipse(this.x, this.y, this.actualSize);
+        objectLayer.fill(50);
+        objectLayer.ellipse(this.x, this.y, this.actualSize*.9);
     }
 }
