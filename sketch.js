@@ -1,3 +1,5 @@
+let won = false;
+
 let left, right;
 let collectables = [];
 let enemies = [];
@@ -236,6 +238,8 @@ function updateProgressMetre() {
 
     let percentCollected = numberCollected/numberOfCollectables*100;
 
+    if (round(percentCollected) >= 100) won = true;
+
     let padding = 10
 
     let w = width - padding*2;
@@ -274,6 +278,8 @@ function updateProgressMetre() {
 }
 
 function reset() {
+
+    won = false;
 
     numberCollected = 0;
     numberUntilNextOrbiter = 0;
