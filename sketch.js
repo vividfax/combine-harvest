@@ -276,7 +276,7 @@ function displayIntroUI() {
     clear();
     background(0);
 
-    let uiText = "- harvest stellar dust to feed a newborn star -\n- beware icy comets -\n- planetoids provide protection -";
+    let uiText = "- harvest stellar dust to feed a newborn star -\n- beware curious comets -\n- planetoids provide protection -";
     let uiTopText = "[play with controller or keyboard]";
     let uiBottomText = "[x] continue";
 
@@ -456,7 +456,7 @@ function updateProgressMetre() {
         gameWinSound.play();
     }
 
-    let padding = 10
+    let padding = 10;
 
     let w = width - padding*2;
     let h = height - padding*2;
