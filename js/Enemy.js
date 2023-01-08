@@ -31,9 +31,11 @@ class Enemy {
         if (this.dead) return;
 
         if (dist(this.x, this.y, left.x, left.y) < this.radius/2 + left.radius/2) {
-            if (!won) {
+            if (!won && left.dead == false) {
                 left.dead = true;
                 showFailUI = true;
+                sunDeathSound.pause();
+                sunDeathSound.currentTime = 0;
                 sunDeathSound.play();
             }
             if (!left.dead) left.radius += 0.1;
@@ -60,6 +62,8 @@ class Enemy {
         } else if (this.y < 0+padding + this.radius/2 && this.velocityY < 0) {
             this.velocityY *= -1;
         }
+
+        if (left.dead) return;
 
         for (let i = 0; i < orbiters.length; i++) {
 

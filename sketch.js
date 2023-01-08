@@ -65,8 +65,10 @@ function preload() {
     for (let i = 0; i < 4; i++) {
 
         let num = i+1;
-        cometSounds.push(new Audio("./sounds/Comet_Musical" + num + ".wav"));
-    }
+        let sound = new Audio("./sounds/Comet_Musical" + num + ".wav");
+        sound.volume = .7;
+        cometSounds.push(sound);
+}
 
     sunDeathSound = new Audio("./sounds/Sun_Death.wav");
     sunSpawnSound = new Audio("./sounds/Sun_Spawn.wav");
