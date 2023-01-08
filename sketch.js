@@ -36,6 +36,8 @@ let gradLocations = [
     1.0
 ];
 
+let music;
+
 function preload() {
 
     vignette = loadImage("./images/vingette.png");
@@ -94,6 +96,10 @@ function setup() {
     let resetButton = createButton("Reset");
     resetButton.position(10, 10);
     resetButton.mousePressed(reset);
+
+    music = new Audio("./sounds/music.mp3");
+    music.loop = true;
+    music.play();
 }
 
 function draw() {
