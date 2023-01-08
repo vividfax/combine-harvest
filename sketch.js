@@ -450,7 +450,7 @@ function updateProgressMetre() {
 
     let percentCollected = (numberCollected/numberOfCollectables*100)+1;
 
-    if (((round(percentCollected) >= 100) || winGame) && !won) {
+    if (((int(percentCollected) >= 100) || winGame) && !won) {
         won = true;
         showWinUI = true;
         gameWinSound.play();
@@ -462,6 +462,8 @@ function updateProgressMetre() {
     let h = height - padding*2;
 
     let metre = percentCollected%25;
+
+    if (won) metre = 24.999;
 
     progressMetreLayer.stroke(255);
     progressMetreLayer.strokeWeight(3);
