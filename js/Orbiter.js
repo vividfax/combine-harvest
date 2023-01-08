@@ -7,11 +7,12 @@ class Orbiter {
         this.radius = 15;
         this.actualSize = 0;
 
-        this.spacingSize = 40;
-        this.actualSpacingSize = 0;
+        this.spacingSize = 40*this.num;
+        this.actualSpacingSize = this.spacingSize-40;
 
-        this.spacing = (this.num-1)*this.spacingSize + right.outerRadius;
-        if (this.num == 0) this.spacing = 0;
+        if (this.num == 0) this.actualSpacingSize = 0;
+
+        this.spacing = 0;
 
         this.degree = random(360);
         if (this.num%2 == 1) this.direction = 1;
@@ -31,12 +32,14 @@ class Orbiter {
         // acc = 10-acc;
         // this.speed = 6 + acc;
 
-        if (this.num == 0 && this.spacing < this.num*this.actualSpacingSize + right.outerRadius) {
-            this.spacing += 5;
+        if (this.num == 0 && this.actualSpacingSize < right.outerRadius) {
+            this.actualSpacingSize += 5;
+            this.spacing = this.actualSpacingSize;
         } else if (this.actualSpacingSize < this.spacingSize) {
-            this.actualSpacingSize += 0.5;
-            this.spacing = this.num*this.actualSpacingSize + right.outerRadius;
+            this.actualSpacingSize += .8;
+            this.spacing = this.actualSpacingSize + right.outerRadius;
         }
+
 
         if (this.actualSize < this.radius) this.actualSize += 0.5;
 

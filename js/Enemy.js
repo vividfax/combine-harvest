@@ -5,7 +5,7 @@ class Enemy {
         let x = random(width);
         let y = random(height);
 
-        while (dist(left.x, left.y, x, y) < 300) {
+        while (dist(left.x, left.y, x, y) < 400) {
             x = random(width);
             y = random(height);
         }
