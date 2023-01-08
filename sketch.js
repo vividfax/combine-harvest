@@ -59,7 +59,7 @@ function preload() {
     regularFont = loadFont("./fonts/AtkinsonHyperlegible-Regular.ttf");
 
     music = new Audio("./sounds/music.mp3");
-    music.volume = 1;
+    music.volume = .5;
     music.loop = true;
 
     for (let i = 0; i < 4; i++) {
