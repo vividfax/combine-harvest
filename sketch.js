@@ -109,7 +109,7 @@ function setup() {
     textFont(regularFont);
 
     setupController();
-    palettes = [palette0];
+    palettes = [palette_lasagna, palette_golden, palette_neon, palette_sandy, palette_green, palette_forest];
     setupBackground();
 
     right = new Right(width/2, height/2);
