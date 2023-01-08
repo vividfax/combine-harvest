@@ -34,6 +34,7 @@ class Enemy {
             if (!won) {
                 left.dead = true;
                 showFailUI = true;
+                sunDeathSound.play();
             }
             if (!left.dead) left.radius += 0.1;
         }
@@ -66,6 +67,17 @@ class Enemy {
             if (dist(orbiter.x, orbiter.y, this.x, this.y) < orbiter.radius/2 + this.radius/2) {
                 this.dead = true;
                 enemies.push(new Enemy());
+
+                let soundInt = int(random(4));
+
+                while (soundInt == cometSoundCache || soundInt == cometSoundCache2) {
+                    soundInt = int(random(4));
+                }
+
+                cometSounds[soundInt].play();
+
+                cometSoundCache2 = cometSoundCache;
+                cometSoundCache = soundInt;
             }
         }
     }

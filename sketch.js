@@ -37,6 +37,14 @@ let gradLocations = [
 ];
 
 let music;
+let cometSounds = [];
+let sunDeathSound;
+let sunSpawnSound;
+let cometSoundCache = -1;
+let cometSoundCache2 = -1;
+let player;
+let pitchShift;
+let sunVolume;
 
 let showFailUI = false;
 let showWinUI = false;
@@ -49,6 +57,31 @@ function preload() {
     cometImage = loadImage("./images/comet.png");
 
     regularFont = loadFont("./fonts/AtkinsonHyperlegible-Regular.ttf");
+
+    music = new Audio("./sounds/music.mp3");
+    music.volume = 1;
+    music.loop = true;
+
+    for (let i = 0; i < 4; i++) {
+
+        let num = i+1;
+        cometSounds.push(new Audio("./sounds/Comet_Musical" + num + ".wav"));
+    }
+
+    sunDeathSound = new Audio("./sounds/Sun_Death.wav");
+    sunSpawnSound = new Audio("./sounds/Sun_Spawn.wav");
+
+    player = new Tone.Player("./sounds/Sun_MovementLoop.wav").toDestination();
+    player.loop = true;
+
+    pitchShift = new Tone.PitchShift({
+        pitch: 0
+    }).toDestination();
+
+    sunVolume = new Tone.Volume([ volume = 0 ]).toDestination();
+
+    player.connect(pitchShift);
+    player.connect(sunVolume);
 }
 
 function setup() {
@@ -101,10 +134,6 @@ function setup() {
     for (let i = 0; i < 500; i++) {
         smallBackgroundStars.push(new SmallBackgroundStar());
     }
-
-    music = new Audio("./sounds/music.mp3");
-    music.loop = true;
-    music.play();
 }
 
 function draw() {
@@ -196,6 +225,10 @@ function displayIntroUI() {
 
     if (keyIsDown(88) || aButtonPressed(2)) {
         showIntro = false;
+        sunSpawnSound.play();
+        music.play();
+        player.start();
+        Tone.start();
         return;
     }
 
@@ -420,6 +453,8 @@ function reset() {
 
     showFailUI = false;
     showWinUI = false;
+
+    sunSpawnSound.play();
 }
 
 function drawStars() {

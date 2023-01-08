@@ -44,6 +44,13 @@ class Left {
         if (this.x < 0) this.x += width;
         if (this.y > height) this.y -= height;
         if (this.y < 0) this.y += height;
+
+        let acc = abs(this.accelerationLX) + abs(this.accelerationLY);
+        let volume = map(acc, 0, 10, -30, 0);
+        player.volume.value = volume;
+        let pitch = acc*2-10;
+
+        pitchShift.pitch = pitch;
     }
 
     display() {
