@@ -61,16 +61,16 @@ class Left {
         if (this.dead) objectLayer.fill(0, 50);
         else objectLayer.fill(255, 100);
 
-        objectLayer.ellipse(this.x + offsetX, this.y + offsetY, this.actualSize);
+        objectLayer.ellipse(this.x + offsetX, this.y + offsetY, this.actualSize+9);
 
         if (this.dead) objectLayer.fill(0);
         else objectLayer.fill(255);
 
-        objectLayer.ellipse(this.x + offsetX, this.y + offsetY, this.actualSize-8);
+        objectLayer.ellipse(this.x + offsetX, this.y + offsetY, this.actualSize);
 
         if (!this.dead) {
             starTrailLayer.fill(0);
-            starTrailLayer.ellipse(this.x, this.y, this.actualSize-9);
+            starTrailLayer.ellipse(this.x, this.y, this.actualSize);
         }
     }
 }
