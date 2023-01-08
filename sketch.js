@@ -40,6 +40,7 @@ let music;
 
 let showFailUI = false;
 let showWinUI = false;
+let showIntro = true;
 
 function preload() {
 
@@ -72,7 +73,7 @@ function setup() {
     backgroundStarLayer.imageMode(CENTER);
     objectLayer.angleMode(DEGREES);
     rectMode(CENTER);
-    textAlign(CENTER, CENTER);
+    textFont(regularFont);
 
     setupController();
     palettes = [palette0];
@@ -110,6 +111,11 @@ function draw() {
 
     buttonsPressed();
     stickMoved();
+
+    if (showIntro) {
+        displayIntroUI();
+        return;
+    }
 
     updatePixels();
 
@@ -152,7 +158,7 @@ function draw() {
     image(objectLayer, 0, 0);
     image(vignette, 0, 0, width, height);
     image(progressMetreLayer, 0, 0);
-    displayUI();
+    displayResetUI();
 
     if (showFailUI || showWinUI) {
         if (keyIsDown(88)) {
@@ -166,11 +172,11 @@ function draw() {
     }
 }
 
-function displayUI() {
+function displayResetUI() {
 
     if (!showFailUI && !showWinUI) return;
 
-    let uiText = "rebirth ⓧ";
+    let uiText = "[x] rebirth";
 
     if (showWinUI) fill(255);
     else if (showFailUI) fill(0);
@@ -182,7 +188,33 @@ function displayUI() {
     else if (showFailUI) fill(255);
 
     textSize(25);
-    text(uiText, width/2, height/2);
+    textAlign(CENTER, CENTER);
+    text(uiText, width/2, height/2-5);
+}
+
+function displayIntroUI() {
+
+    if (keyIsDown(88) || aButtonPressed(2)) {
+        showIntro = false;
+        return;
+    }
+
+    clear();
+    background(0);
+
+    let uiText = "- harvest stellar dust to feed a newborn star -\n- beware icy comets -\n- planetoids provide protection -";
+    let uiTopText = "[play with controller or keyboard]";
+    let uiBottomText = "[x] continue";
+
+    textSize(25);
+    textAlign(CENTER, BASELINE);
+    fill(255);
+    text(uiText, width/2, height/2-35);
+
+    textAlign(CENTER, CENTER);
+    fill(80);
+    text(uiTopText, width/2, 50);
+    text(uiBottomText, width/2, height-50);
 }
 
 function buttonsPressed() {
@@ -297,14 +329,12 @@ function setupBackground() {
         //   pixels[pixel+2] = blue(col);
         //   pixels[pixel+3] = alpha(col);
         }
-      }
-
-    updatePixels();
+    }
 }
 
 function updateProgressMetre() {
 
-    let percentCollected = numberCollected/numberOfCollectables*100;
+    let percentCollected = (numberCollected/numberOfCollectables*100)+1;
 
     if (round(percentCollected) >= 100) {
         won = true;

@@ -48,8 +48,8 @@ class Left {
 
     display() {
 
-        let offsetX = random(-this.radius/200, this.radius/200);
-        let offsetY = random(-this.radius/200, this.radius/200);
+        let offsetX = random(this.radius*.01);
+        let offsetY = random(this.radius*.01);
 
         if (this.dead) {
             offsetX = 0;
