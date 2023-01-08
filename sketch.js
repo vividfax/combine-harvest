@@ -21,6 +21,7 @@ let progressMetreLayer;
 let vignette;
 let starImage;
 let cometImage;
+let cometImage2;
 
 let regularFont;
 
@@ -42,6 +43,8 @@ let sunDeathSound;
 let sunSpawnSound;
 let newOrbiterSound;
 let gameWinSound;
+let supernovaSound0;
+let supernovaSound1;
 
 let cometSoundCache = -1;
 let player;
@@ -56,6 +59,7 @@ let showSupernovaScene = false;
 let supernovaSceneTime = 0;
 
 let invincible = false;
+let winGame = false;
 
 let musicVolume = 0;
 
@@ -64,6 +68,7 @@ function preload() {
     vignette = loadImage("./images/vingette.png");
     starImage = loadImage("./images/star.png");
     cometImage = loadImage("./images/comet.png");
+    cometImage2 = loadImage("./images/comet2.png");
 
     regularFont = loadFont("./fonts/AtkinsonHyperlegible-Regular.ttf");
 
@@ -84,6 +89,9 @@ function preload() {
     newOrbiterSound = new Audio("./sounds/Sun_NewOrbit.wav");
     newOrbiterSound.volume = .3;
     gameWinSound = new Audio("./sounds/GameWin.wav");
+    gameWinSound.volume = .5;
+    supernovaSound0 = new Audio("./sounds/Supernova_1.wav");
+    supernovaSound1 = new Audio("./sounds/Supernova_2.wav");
 
     player = new Tone.Player("./sounds/Sun_MovementLoop.wav").toDestination();
     player.loop = true;
@@ -220,16 +228,16 @@ function draw() {
         }
     }
 
-    if (showWinUI && !showSupernovaScene) {
+    if ((showWinUI && !showSupernovaScene)) {
         if (keyIsDown(88)) {
             supernovaSceneTime = 0;
             showSupernovaScene = true;
-            gameWinSound.play();
+            supernovaSound0.play();
         }
         if (aButtonPressed(2)) {
             supernovaSceneTime = 0;
             showSupernovaScene = true;
-            gameWinSound.play();
+            supernovaSound0.play();
         }
     }
 }
@@ -297,6 +305,10 @@ function displaySupernovaScene() {
         ellipse (left.x + sin(frameCount*20)*5, left.y + cos(frameCount*20)*5,left.radius +supernovaSceneTime*2);
 
     } else {
+
+        if (supernovaSceneTime == 50) {
+            supernovaSound1.play();
+        }
 
         stroke(255, 255*.5);
         strokeWeight(40);
@@ -438,9 +450,10 @@ function updateProgressMetre() {
 
     let percentCollected = (numberCollected/numberOfCollectables*100)+1;
 
-    if (round(percentCollected) >= 100) {
+    if (((round(percentCollected) >= 100) || winGame) && !won) {
         won = true;
         showWinUI = true;
+        gameWinSound.play();
     }
 
     let padding = 10
@@ -483,6 +496,7 @@ function updateProgressMetre() {
 function reset() {
 
     won = false;
+    winGame = false;
 
     numberCollected = 0;
     numberUntilNextOrbiter = 0;

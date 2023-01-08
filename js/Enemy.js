@@ -22,6 +22,11 @@ class Enemy {
         this.velocityY = random(-this.maxVelocity, this.maxVelocity);
 
         this.dead = false;
+
+        this.animLength = 5;
+        this.frameOffset = int(random(this.animLength));
+        this.animFrameCount = this.frameOffset;
+        this.animFrame = random([-1, 1]);
     }
 
     update() {
@@ -96,10 +101,26 @@ class Enemy {
         objectLayer.translate(this.x, this.y);
         objectLayer.rotate(heading);
         objectLayer.imageMode(CENTER);
+
         // objectLayer.noStroke();
         // objectLayer.fill(100, 0, 0);
-        // objectLayer.ellipse(this.x, this.y, this.actualSize);
-        objectLayer.image(cometImage, 0, 0, this.actualSize*3, this.actualSize*3);
+        // objectLayer.ellipse(0, 0, this.actualSize);
+
+
+
+        // if (this.animFrame == 1) {
+            objectLayer.image(cometImage, 0, 0, this.actualSize*4, this.actualSize*4);
+        // } else {
+        //     objectLayer.image(cometImage2, 0, 0, this.actualSize*4, this.actualSize*4);
+        // }
+
         objectLayer.pop();
+
+        // this.animFrameCount++;
+
+        // if (this.animFrameCount > this.animLength) {
+        //     this.animFrameCount = 0;
+        //     this.animFrame *= -1;
+        // }
     }
 }
