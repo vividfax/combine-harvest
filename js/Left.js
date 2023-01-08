@@ -61,7 +61,7 @@ class Left {
         if (this.dead) objectLayer.fill(0, 50);
         else objectLayer.fill(255, 100);
 
-        objectLayer.ellipse(this.x + offsetX, this.y + offsetY, this.actualSize+9);
+        objectLayer.ellipse(this.x + offsetX, this.y + offsetY, this.actualSize+10 + this.actualSize*.1);
 
         if (this.dead) objectLayer.fill(0);
         else objectLayer.fill(255);
@@ -70,7 +70,7 @@ class Left {
 
         if (!this.dead) {
             starTrailLayer.fill(0);
-            starTrailLayer.ellipse(this.x, this.y, this.actualSize);
+            starTrailLayer.ellipse(this.x, this.y, this.actualSize-1);
         }
     }
 }
