@@ -86,6 +86,8 @@ function preload() {
 
     player.connect(pitchShift);
     player.connect(sunVolume);
+
+    palettes = loadJSON("./json/galaxyPalettes.json");
 }
 
 function setup() {
@@ -113,7 +115,7 @@ function setup() {
     textFont(regularFont);
 
     setupController();
-    palettes = [palette_lasagna, palette_golden, palette_neon, palette_sandy, palette_green, palette_forest];
+    palettes = palettes.palettes;
     setupBackground();
 
     right = new Right(width/2, height/2);
@@ -194,18 +196,16 @@ function draw() {
     displayResetUI();
     displaySupernovaScene();
 
-    if (showFailUI) {
+    if (showFailUI && !showSupernovaScene) {
         if (keyIsDown(88)) {
-            supernovaSceneTime = 0;
-            showSupernovaScene = true;
+            reset();
         }
         if (aButtonPressed(2)) {
-            supernovaSceneTime = 0;
-            showSupernovaScene = true;
+            reset();
         }
     }
 
-    if (showWinUI) {
+    if (showWinUI && !showSupernovaScene) {
         if (keyIsDown(88)) {
             supernovaSceneTime = 0;
             showSupernovaScene = true;
@@ -286,13 +286,13 @@ function displaySupernovaScene() {
         noStroke();
         fill(255, 255);
         x += (supernovaSceneTime-50) * 20 * (supernovaSceneTime-50);
-        y -= (supernovaSceneTime-50) + (y*2 * (supernovaSceneTime-50));
-        ellipse(left.x, left.y, x,y);
+        y -= (supernovaSceneTime-50)*0.1 * (y*2 * (supernovaSceneTime-50));
+        ellipse(left.x, left.y, x, y);
     }
 
     supernovaSceneTime++;
 
-    if (supernovaSceneTime > 50*2.5) {
+    if (supernovaSceneTime > 50*2) {
 
         reset();
         showSupernovaScene = false;
