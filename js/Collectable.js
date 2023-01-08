@@ -48,6 +48,7 @@ class Collectable {
                 numberUntilNextOrbiter = 0;
                 orbiters.push(new Orbiter(orbiters.length));
                 enemies.push(new Enemy());
+                newOrbiterSound.play();
             }
         }
 

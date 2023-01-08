@@ -40,6 +40,9 @@ let music;
 let cometSounds = [];
 let sunDeathSound;
 let sunSpawnSound;
+let newOrbiterSound;
+let gameWinSound;
+
 let cometSoundCache = -1;
 let player;
 let pitchShift;
@@ -54,6 +57,8 @@ let supernovaSceneTime = 0;
 
 let invincible = false;
 
+let musicVolume = 0;
+
 function preload() {
 
     vignette = loadImage("./images/vingette.png");
@@ -63,7 +68,7 @@ function preload() {
     regularFont = loadFont("./fonts/AtkinsonHyperlegible-Regular.ttf");
 
     music = new Audio("./sounds/music.ogg");
-    music.volume = .5;
+    music.volume = musicVolume;
     music.loop = true;
 
     for (let i = 0; i < 4; i++) {
@@ -72,10 +77,13 @@ function preload() {
         let sound = new Audio("./sounds/Comet_Musical" + num + ".wav");
         sound.volume = .7;
         cometSounds.push(sound);
-}
+    }
 
     sunDeathSound = new Audio("./sounds/Sun_Death.wav");
     sunSpawnSound = new Audio("./sounds/Sun_Spawn.wav");
+    newOrbiterSound = new Audio("./sounds/Sun_NewOrbit.wav");
+    newOrbiterSound.volume = .3;
+    gameWinSound = new Audio("./sounds/GameWin.wav");
 
     player = new Tone.Player("./sounds/Sun_MovementLoop.wav").toDestination();
     player.loop = true;
@@ -152,6 +160,11 @@ function draw() {
     if (showIntro) {
         displayIntroUI();
         return;
+    } else {
+        if (musicVolume < 0.5) {
+            musicVolume += 0.005;
+            music.volume = musicVolume;
+        }
     }
 
     updatePixels();
@@ -211,10 +224,12 @@ function draw() {
         if (keyIsDown(88)) {
             supernovaSceneTime = 0;
             showSupernovaScene = true;
+            gameWinSound.play();
         }
         if (aButtonPressed(2)) {
             supernovaSceneTime = 0;
             showSupernovaScene = true;
+            gameWinSound.play();
         }
     }
 }
@@ -277,7 +292,10 @@ function displaySupernovaScene() {
 
     if (supernovaSceneTime < 50) {
 
-        ellipse (left.x + sin(frameCount*20)*5, left.y + cos(frameCount*20)*5,left.radius +supernovaSceneTime*2)
+        noStroke();
+        fill(255);
+        ellipse (left.x + sin(frameCount*20)*5, left.y + cos(frameCount*20)*5,left.radius +supernovaSceneTime*2);
+
     } else {
 
         stroke(255, 255*.5);
