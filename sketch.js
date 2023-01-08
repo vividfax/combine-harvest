@@ -41,7 +41,6 @@ let cometSounds = [];
 let sunDeathSound;
 let sunSpawnSound;
 let cometSoundCache = -1;
-let cometSoundCache2 = -1;
 let player;
 let pitchShift;
 let sunVolume;
@@ -49,6 +48,9 @@ let sunVolume;
 let showFailUI = false;
 let showWinUI = false;
 let showIntro = true;
+let showSupernovaScene = false;
+
+let supernovaSceneTime = 0;
 
 function preload() {
 
@@ -58,7 +60,7 @@ function preload() {
 
     regularFont = loadFont("./fonts/AtkinsonHyperlegible-Regular.ttf");
 
-    music = new Audio("./sounds/music.mp3");
+    music = new Audio("./sounds/music.ogg");
     music.volume = .5;
     music.loop = true;
 
@@ -190,15 +192,27 @@ function draw() {
     image(vignette, 0, 0, width, height);
     image(progressMetreLayer, 0, 0);
     displayResetUI();
+    displaySupernovaScene();
 
-    if (showFailUI || showWinUI) {
+    if (showFailUI) {
         if (keyIsDown(88)) {
-            reset();
-            console.log('reset')
+            supernovaSceneTime = 0;
+            showSupernovaScene = true;
         }
         if (aButtonPressed(2)) {
-            console.log('reset')
-            reset();
+            supernovaSceneTime = 0;
+            showSupernovaScene = true;
+        }
+    }
+
+    if (showWinUI) {
+        if (keyIsDown(88)) {
+            supernovaSceneTime = 0;
+            showSupernovaScene = true;
+        }
+        if (aButtonPressed(2)) {
+            supernovaSceneTime = 0;
+            showSupernovaScene = true;
         }
     }
 }
@@ -250,6 +264,39 @@ function displayIntroUI() {
     fill(80);
     text(uiTopText, width/2, 50);
     text(uiBottomText, width/2, height-50);
+}
+
+function displaySupernovaScene() {
+
+    if (!showSupernovaScene) return;
+
+    let x = 50;
+    let y = 10;
+
+    if (supernovaSceneTime < 50) {
+
+        ellipse (left.x + sin(frameCount*20)*5, left.y + cos(frameCount*20)*5,left.radius +supernovaSceneTime*2)
+    } else {
+
+        stroke(255, 255*.5);
+        strokeWeight(40);
+        noFill();
+        ellipse(left.x, left.y, 50 * (supernovaSceneTime-50)*3);
+
+        noStroke();
+        fill(255, 255);
+        x += (supernovaSceneTime-50) * 20 * (supernovaSceneTime-50);
+        y -= (supernovaSceneTime-50) + (y*2 * (supernovaSceneTime-50));
+        ellipse(left.x, left.y, x,y);
+    }
+
+    supernovaSceneTime++;
+
+    if (supernovaSceneTime > 50*2.5) {
+
+        reset();
+        showSupernovaScene = false;
+    }
 }
 
 function buttonsPressed() {

@@ -74,13 +74,12 @@ class Enemy {
 
                 let soundInt = int(random(4));
 
-                while (soundInt == cometSoundCache || soundInt == cometSoundCache2) {
+                while (soundInt == cometSoundCache) {
                     soundInt = int(random(4));
                 }
 
                 cometSounds[soundInt].play();
 
-                cometSoundCache2 = cometSoundCache;
                 cometSoundCache = soundInt;
             }
         }
