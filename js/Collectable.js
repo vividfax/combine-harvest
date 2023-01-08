@@ -40,9 +40,9 @@ class Collectable {
             numberCollected++;
             numberUntilNextOrbiter++;
 
-            if (left.radius < 80) {
+            // if (left.radius < 80) {
                 left.radius += 0.01;
-            }
+            // }
 
             if (numberUntilNextOrbiter >= numberOfCollectables/10) {
                 numberUntilNextOrbiter = 0;

@@ -31,9 +31,8 @@ class Enemy {
         if (this.dead) return;
 
         if (dist(this.x, this.y, left.x, left.y) < this.radius/2 + left.radius/2) {
-            if (!won) {
-                left.dead = true;
-            }
+            if (!won) left.dead = true;
+            if (!left.dead) left.radius += 0.1;
         }
 
         this.x += this.velocityX;

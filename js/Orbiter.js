@@ -49,6 +49,11 @@ class Orbiter {
 
         this.x = vec.x + right.x;
         this.y = vec.y + right.y;
+
+        if (this.x > width) this.x -= width;
+        else if (this.x < 0) this.x += width;
+        if (this.y > height) this.y -= height;
+        else if (this.y < 0) this.y += height;
     }
 
     display() {

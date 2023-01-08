@@ -5,7 +5,7 @@ class Left {
         this.x = x;
         this.y = y;
 
-        this.radius = 20;
+        this.radius = 40;
         this.actualSize = 0;
 
         this.dead = false;
@@ -48,8 +48,8 @@ class Left {
 
     display() {
 
-        let offsetX = random(-this.radius/100, this.radius/100);
-        let offsetY = random(-this.radius/100, this.radius/100);
+        let offsetX = random(-this.radius/200, this.radius/200);
+        let offsetY = random(-this.radius/200, this.radius/200);
 
         if (this.dead) {
             offsetX = 0;

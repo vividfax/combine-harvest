@@ -10,6 +10,7 @@ let smallBackgroundStars = [];
 let numberCollected = 0;
 let numberOfCollectables = 5000;
 let numberUntilNextOrbiter = 0;
+let numberOfEnemies = 5;
 
 let objectLayer;
 let starTrailLayer;
@@ -24,13 +25,14 @@ let cometImage;
 let regularFont;
 
 let currentPalette;
+let palettes;
 let gradLocations = [
     0,
-    0.3,
-    0.45,
-    0.5,
+    0.2,
+    0.33,
+    0.35,
+    0.4,
     0.6,
-    0.7,
     1.0
 ];
 
@@ -63,7 +65,7 @@ function setup() {
     objectLayer.angleMode(DEGREES);
 
     setupController();
-    currentPalette = palette0;
+    palettes = [palette0];
     setupBackground();
 
     right = new Right(width/2, height/2);
@@ -73,7 +75,7 @@ function setup() {
         collectables.push(new Collectable(random(width), random(height)));
     }
 
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < numberOfEnemies; i++) {
         enemies.push(new Enemy());
     }
 
@@ -181,8 +183,12 @@ function buttonsPressed() {
 
 function setupBackground() {
 
-    let perlinScale = 0.01;
+    currentPalette = random(palettes);
+
+    let perlinScale = 0.007;
     noiseSeed(random(1000000));
+
+    loadPixels();
 
     for (let i = 0; i < width; i++) {
         for (let j = 0; j < height; j++) {
@@ -193,10 +199,16 @@ function setupBackground() {
           let colourB;
 
           //A - B
-          if (perlin < gradLocations[1]){
-            colourA = color(currentPalette.gradA);
+            if (perlin < gradLocations[0]) {
+                colourA = color(currentPalette.gradC);
+                colourB = color(currentPalette.gradC);
+                perlin = map(perlin, 0, gradLocations[0], 0, 1);
+            }
+
+          else if (perlin > gradLocations[0] && perlin < gradLocations[1]){
+            colourA = color(currentPalette.gradC);
             colourB = color(currentPalette.gradB);
-            perlin = map(perlin, 0, gradLocations[1], 0, 1);
+            perlin = map(perlin, gradLocations[0], gradLocations[1], 0, 1);
           }
 
           //B - C
@@ -224,14 +236,25 @@ function setupBackground() {
             colourB = color(currentPalette.gradF);
             perlin = map(perlin, gradLocations[4], gradLocations[5], 0, 1);
           //F
-          }else{
+          } else if (perlin < gradLocations[6]) {
             colourA = color(currentPalette.gradF);
-            colourB = color(currentPalette.gradF);
-            perlin = map(perlin, gradLocations[5], 1.0, 0, 1);
+            colourB = color(currentPalette.gradE);
+            perlin = map(perlin, gradLocations[5], gradLocations[6], 0, 1);
+          } else {
+            colourA = color(currentPalette.gradE);
+            colourB = color(currentPalette.gradE);
+            perlin = map(perlin, gradLocations[6], 1.0, 0, 1);
           }
 
           col = lerpColor(colourA, colourB, perlin);
-          set(i, j, color(col));
+
+            set(i, j, color(col));
+
+        //   let pixel = (width*2*j + i)*4;
+        //   pixels[pixel] = red(col);
+        //   pixels[pixel+1] = green(col);
+        //   pixels[pixel+2] = blue(col);
+        //   pixels[pixel+3] = alpha(col);
         }
       }
 
@@ -300,7 +323,7 @@ function reset() {
         collectables.push(new Collectable(random(width), random(height)));
     }
 
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < numberOfEnemies; i++) {
         enemies.push(new Enemy());
     }
 
