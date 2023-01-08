@@ -244,7 +244,7 @@ function draw() {
 
 function displayResetUI() {
 
-    if (!showFailUI && !showWinUI) return;
+    if ((!showFailUI && !showWinUI) || showSupernovaScene) return;
 
     let uiText = "[x] rebirth";
 
