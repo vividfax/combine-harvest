@@ -52,6 +52,8 @@ let showSupernovaScene = false;
 
 let supernovaSceneTime = 0;
 
+let invincible = false;
+
 function preload() {
 
     vignette = loadImage("./images/vingette.png");
