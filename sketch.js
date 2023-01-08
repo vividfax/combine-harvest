@@ -38,6 +38,9 @@ let gradLocations = [
 
 let music;
 
+let showFailUI = false;
+let showWinUI = false;
+
 function preload() {
 
     vignette = loadImage("./images/vingette.png");
@@ -65,6 +68,8 @@ function setup() {
     frameRate(50);
     backgroundStarLayer.imageMode(CENTER);
     objectLayer.angleMode(DEGREES);
+    rectMode(CENTER);
+    textAlign(CENTER, CENTER);
 
     setupController();
     palettes = [palette0];
@@ -92,10 +97,6 @@ function setup() {
     for (let i = 0; i < 500; i++) {
         smallBackgroundStars.push(new SmallBackgroundStar());
     }
-
-    let resetButton = createButton("Reset");
-    resetButton.position(10, 10);
-    resetButton.mousePressed(reset);
 
     music = new Audio("./sounds/music.mp3");
     music.loop = true;
@@ -148,6 +149,37 @@ function draw() {
     image(objectLayer, 0, 0);
     image(vignette, 0, 0, width, height);
     image(progressMetreLayer, 0, 0);
+    displayUI();
+
+    if (showFailUI || showWinUI) {
+        if (keyIsDown(88)) {
+            reset();
+            console.log('reset')
+        }
+        if (aButtonPressed(2)) {
+            console.log('reset')
+            reset();
+        }
+    }
+}
+
+function displayUI() {
+
+    if (!showFailUI && !showWinUI) return;
+
+    let uiText = "rebirth ⓧ";
+
+    if (showWinUI) fill(255);
+    else if (showFailUI) fill(0);
+
+    noStroke();
+    rect(width/2, height/2, 200, 60, 80);
+
+    if (showWinUI) fill(0);
+    else if (showFailUI) fill(255);
+
+    textSize(25);
+    text(uiText, width/2, height/2);
 }
 
 function buttonsPressed() {
@@ -271,7 +303,10 @@ function updateProgressMetre() {
 
     let percentCollected = numberCollected/numberOfCollectables*100;
 
-    if (round(percentCollected) >= 100) won = true;
+    if (round(percentCollected) >= 100) {
+        won = true;
+        showWinUI = true;
+    }
 
     let padding = 10
 
@@ -349,6 +384,9 @@ function reset() {
     starTrailLayer.clear();
     backgroundStarLayer.clear();
     progressMetreLayer.clear();
+
+    showFailUI = false;
+    showWinUI = false;
 }
 
 function drawStars() {

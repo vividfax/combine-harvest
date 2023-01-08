@@ -73,7 +73,7 @@ class Orbiter {
         objectLayer.ellipse(this.x, this.y+height, this.actualSize*.9);
 
         // if (!left.dead) {
-        //     starTrailLayer.fill(1);
+        //     starTrailLayer.fill(0);
         //     starTrailLayer.ellipse(this.x, this.y, this.actualSize-9);
         // }
     }
