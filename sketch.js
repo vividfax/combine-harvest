@@ -58,6 +58,9 @@ function setup() {
     if (w > 900) w = 900;
     if (h > 900) h = 900;
 
+    if (w > h) w = h;
+    else if (h > w) h = w;
+
     createCanvas(w, h);
     objectLayer = createGraphics(w, h);
     starTrailLayer = createGraphics(w, h);

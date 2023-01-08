@@ -30,7 +30,7 @@ class Collectable {
         noFill();
         noStroke();
         fill(255, 255, 255, 10);
-        rect(this.x, this.y, this.radius);
+        ellipse(this.x, this.y, this.radius);
     }
 
     checkDist(x, y, radius) {
