@@ -46,7 +46,7 @@ class Left {
         if (this.y < 0) this.y += height;
 
         let acc = abs(this.accelerationLX) + abs(this.accelerationLY);
-        let volume = map(acc, 0, 10, -30, -5);
+        let volume = map(acc, 0, 10, -30, -8);
         player.volume.value = volume;
         let pitch = acc*2-10;
 
